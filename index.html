@@ -30,7 +30,16 @@
     --gold-soft: #2B2416; --primary-soft: #12324A; --shadow: 0 18px 40px rgba(0, 0, 0, .35);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #9DB3C7 transparent; }
+  [data-theme="dark"] { scrollbar-color: #2E4053 transparent; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #9DB3C7; border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background-color: #6F8BA5; }
+  [data-theme="dark"] ::-webkit-scrollbar-thumb { background-color: #2E4053; }
+  .progress { position: absolute; inset-inline: 0; bottom: 0; height: 3px; transform-origin: right; transform: scaleX(0);
+    background: linear-gradient(90deg, var(--gold), var(--blue)); }
+
   body { font-family: "Readex Pro", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; transition: background .25s, color .25s; }
   a { color: inherit; text-decoration: none; }
   img { max-width: 100%; display: block; }
@@ -92,7 +101,7 @@
   #features .card { background: #F6F9FC; box-shadow: none; }
   #download { background: linear-gradient(180deg, #E6F0F8, #EEF5FB); border-block: 1px solid #D6E4F0; }
   #gemini { background: #FFFFFF; }
-  #faq { background: linear-gradient(180deg, #FBF5EA, #FDF9F1); border-block: 1px solid #EFE3CC; }
+  #faq { background: linear-gradient(180deg, #E6F0F8, #EEF5FB); border-block: 1px solid #D6E4F0; }
   .devs { background: #F4F6F9; }
   [data-theme="dark"] #features, [data-theme="dark"] #gemini { background: var(--bg); }
   [data-theme="dark"] #features .card { background: var(--surface); }
@@ -142,7 +151,7 @@
   .dev { padding: 0; overflow: hidden; text-align: center; }
   .about { display: flex; flex-direction: column; justify-content: center; padding: 30px 30px; font-family: "Readex Pro", sans-serif; }
   .about h3 { color: var(--gold-deep); text-align: center; font-size: 24px; margin-bottom: 16px; }
-  .about p { font-size: 16.5px; line-height: 1.95; text-align: justify; margin-top: 10px; }
+  .about p { font-size: 16.5px; line-height: 1.95; text-align: start; margin-top: 10px; }
   .dev .banner { height: 110px; background:
       radial-gradient(300px 120px at 80% 0%, rgba(90,176,230,.45), transparent 70%),
       radial-gradient(260px 120px at 10% 100%, rgba(217,184,122,.35), transparent 70%),
@@ -194,7 +203,7 @@
   <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.9 4.3L18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.4 13 1.6 11.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></symbol>
 </svg>
 
-<header>
+<header dir="rtl">   <!-- the bar keeps one layout in both languages; only its words change -->
   <div class="wrap">
     <a class="logo" href="#"><img src="assets/logo.png" alt="ACADEX"><span class="en-text">ACADEX</span></a>
     <nav class="main">
@@ -212,6 +221,7 @@
       <button class="lang" id="lang" type="button">English</button>
     </div>
   </div>
+  <div class="progress" id="progress"></div>
 </header>
 
 <div class="hero">
@@ -219,7 +229,7 @@
     <div>
       <span class="badge"><span data-i18n="badge">النسخة التجريبية</span> · <span class="en-text" id="ver">V 1.0.0 Beta</span></span>
       <h1><span data-i18n="h1a">محاضراتك المسجّلة،</span> <span class="gold" data-i18n="h1b">معك دون إنترنت</span></h1>
-      <p class="lead" data-i18n="lead">نزّل جلسات الجامعة الافتراضية السورية المسجّلة وشاهدها في أي وقت مع الفيديو والصوت وتعليقات الطلاب، ودع Gemini يلخّصها ويجيب عن أسئلتك.</p>
+      <p class="lead" data-i18n="lead">نزّل محاضراتك المسجّلة وشاهدها في أي وقت مع الفيديو والصوت وتعليقات الطلاب، ودع Gemini يلخّصها ويجيب عن أسئلتك.</p>
       <div class="cta">
         <a class="btn win" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span><span data-i18n="dl_win">تحميل للويندوز</span><small data-i18n="dl_win_s">ويندوز 10 و11</small></span></a>
         <a class="btn and" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span><span data-i18n="dl_and">تحميل للأندرويد</span><small data-i18n="dl_and_s">أندرويد 8 فما فوق</small></span></a>
@@ -346,7 +356,7 @@
   const EN = {
     nav_features: "Features", nav_download: "Download", nav_faq: "FAQ", tg: "Telegram channel",
     badge: "Beta", h1a: "Your recorded lectures,", h1b: "with you offline",
-    lead: "Download the Syrian Virtual University's recorded sessions and watch them any time with video, voice and class comments, and let Gemini summarize them and answer your questions.",
+    lead: "Download your recorded lectures and watch them any time with video, voice and class comments, and let Gemini summarize them and answer your questions.",
     dl_win: "Download for Windows", dl_win_s: "Windows 10 and 11", dl_and: "Download for Android", dl_and_s: "Android 8 and newer",
     meta: "Free · No account · Your lectures stay on your device",
     f_title: "Everything you need to follow your lectures", f_sub: "Made for SVU students, and for weak or missing internet.",
@@ -400,6 +410,18 @@
     document.documentElement.dataset.theme = dark ? "dark" : "light";
     try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
   });
+
+  // The line under the bar shows how far down the page you are.
+  const bar = document.getElementById("progress");
+  let ticking = false;
+  function showProgress() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, scrollY / max) : 0) + ")";
+    ticking = false;
+  }
+  addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(showProgress); } }, { passive: true });
+  addEventListener("resize", showProgress);
+  showProgress();
 
   // The version shown comes from version.json, the same file the apps read.
   fetch("https://raw.githubusercontent.com/loailoubani/acadex/main/version.json", { cache: "no-store" }).then(r => r.json()).then(v => {
