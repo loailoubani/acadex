@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ACADEX · محاضراتك المسجّلة بلا إنترنت</title>
-<meta name="description" content="ACADEX: نزّل محاضرات الجامعة الافتراضية السورية المسجّلة واسمعها بلا إنترنت، مع الفيديو والتعليقات وGemini. للأندرويد والويندوز.">
+<title>ACADEX · محاضراتك المسجّلة دون إنترنت</title>
+<meta name="description" content="ACADEX: نزّل محاضرات الجامعة الافتراضية السورية المسجّلة وشاهدها دون إنترنت، مع الفيديو والتعليقات وGemini. للأندرويد والويندوز.">
 <meta property="og:title" content="ACADEX · النسخة التجريبية">
-<meta property="og:description" content="محاضرات الجامعة الافتراضية السورية المسجّلة، معك بلا إنترنت. للأندرويد والويندوز.">
+<meta property="og:description" content="محاضرات الجامعة الافتراضية السورية المسجّلة، معك دون إنترنت. للأندرويد والويندوز.">
 <meta property="og:image" content="https://loailoubani.github.io/acadex/assets/poster.png">
 <meta name="theme-color" content="#0B3A5E">
 <link rel="icon" href="favicon.ico">
@@ -47,7 +47,8 @@
   nav.main { display: flex; gap: 22px; font-size: 15px; color: #C9D6E2; margin-inline-start: 10px; }
   nav.main a:hover { color: #fff; }
   .actions { display: flex; align-items: center; gap: 8px; margin-inline-start: auto; }
-  .tg { display: inline-flex; align-items: center; gap: 8px; background: #229ED9; color: #fff; padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: filter .15s; }
+  .tg { width: 38px; height: 38px; display: grid; place-items: center; background: #229ED9; color: #fff; border-radius: 999px; transition: filter .15s, transform .15s; }
+  .tg:hover { transform: translateY(-1px); }
   .tg:hover { filter: brightness(1.1); }
   .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; cursor: pointer; }
   .icon-btn:hover { background: rgba(255,255,255,.1); }
@@ -85,14 +86,24 @@
   .shots .p2 { inset-inline-start: 25%; top: 31%; transform: rotate(-4deg); }
 
   /* ---------- sections ---------- */
-  section { padding: 76px 0; }
-  .alt { background: var(--surface2); }
+  section { padding: 76px 0; background: var(--bg); }
+  /* Light: white, soft blue and soft gold sections take turns, so each one reads as its own band. */
+  #features { background: #FFFFFF; }
+  #features .card { background: #F6F9FC; box-shadow: none; }
+  #download { background: linear-gradient(180deg, #E6F0F8, #EEF5FB); border-block: 1px solid #D6E4F0; }
+  #gemini { background: #FFFFFF; }
+  #faq { background: linear-gradient(180deg, #FBF5EA, #FDF9F1); border-block: 1px solid #EFE3CC; }
+  .devs { background: #F4F6F9; }
+  [data-theme="dark"] #features, [data-theme="dark"] #gemini { background: var(--bg); }
+  [data-theme="dark"] #features .card { background: var(--surface); }
+  [data-theme="dark"] #download, [data-theme="dark"] #faq { background: var(--surface2); border-block: 1px solid var(--border); }
+  [data-theme="dark"] .devs { background: var(--bg); }
   .head { text-align: center; max-width: 720px; margin: 0 auto 40px; }
   .head h2 { font-size: clamp(26px, 3.5vw, 38px); line-height: 1.3; }
   .head p { color: var(--muted); font-size: clamp(15px, 1.8vw, 18px); margin-top: 8px; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   /* grid children may shrink below their content's natural width (no sideways scrolling on phones) */
-  .hero .wrap > *, .grid > *, .downloads > *, .gemini > * { min-width: 0; }
+  .hero .wrap > *, .grid > *, .downloads > *, .gemini > *, .pair > * { min-width: 0; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); }
   .feat .ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--gold-soft); margin-bottom: 14px; }
   .feat .ic svg { width: 26px; height: 26px; fill: var(--gold-deep); }
@@ -127,7 +138,11 @@
   details p { color: var(--muted); margin-top: 10px; font-size: 15.5px; }
 
   /* ---------- developer ---------- */
-  .dev { max-width: 560px; margin: 0 auto; padding: 0; overflow: hidden; text-align: center; }
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: stretch; max-width: 1040px; }
+  .dev { padding: 0; overflow: hidden; text-align: center; }
+  .about { display: flex; flex-direction: column; justify-content: center; padding: 30px 30px; font-family: "Readex Pro", sans-serif; }
+  .about h3 { color: var(--gold-deep); text-align: center; font-size: 24px; margin-bottom: 16px; }
+  .about p { font-size: 16.5px; line-height: 1.95; text-align: justify; margin-top: 10px; }
   .dev .banner { height: 110px; background:
       radial-gradient(300px 120px at 80% 0%, rgba(90,176,230,.45), transparent 70%),
       radial-gradient(260px 120px at 10% 100%, rgba(217,184,122,.35), transparent 70%),
@@ -153,15 +168,13 @@
   /* ---------- smaller screens ---------- */
   @media (max-width: 960px) {
     nav.main { display: none; }
-    .hero .wrap, .gemini, .downloads { grid-template-columns: minmax(0, 1fr); }
+    .hero .wrap, .gemini, .downloads, .pair { grid-template-columns: minmax(0, 1fr); }
     .hero .shots { max-width: 620px; margin: 0 auto; }
     .grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
     section { padding: 56px 0; }
     .hero { padding: 40px 0 52px; }
-    .tg .label { display: none; }
-    .tg { padding: 0; width: 38px; height: 38px; justify-content: center; }
     .grid { grid-template-columns: minmax(0, 1fr); }
     .cta .btn { flex: 1 1 100%; justify-content: center; }
     .card { padding: 20px; }
@@ -188,10 +201,10 @@
       <a href="#features" data-i18n="nav_features">المميزات</a>
       <a href="#download" data-i18n="nav_download">التحميل</a>
       <a href="#gemini">Gemini</a>
-      <a href="#faq" data-i18n="nav_faq">أسئلة</a>
+      <a href="#faq" data-i18n="nav_faq">الأسئلة الشائعة</a>
     </nav>
     <div class="actions">
-      <a class="tg" href="https://t.me/acadexapp" target="_blank" rel="noopener" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg><span class="label" data-i18n="tg">قناة تلغرام</span></a>
+      <a class="tg" href="https://t.me/acadexapp" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
       <button class="icon-btn" id="theme" type="button" aria-label="Dark / light">
         <svg class="i moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 01-4.4 2.26 5.4 5.4 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
         <svg class="i sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 000-2H2a1 1 0 000 2zm18 0h2a1 1 0 000-2h-2a1 1 0 000 2zM11 2v2a1 1 0 002 0V2a1 1 0 00-2 0zm0 18v2a1 1 0 002 0v-2a1 1 0 00-2 0zM5.99 4.58a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06z"/></svg>
@@ -205,13 +218,13 @@
   <div class="wrap">
     <div>
       <span class="badge"><span data-i18n="badge">النسخة التجريبية</span> · <span class="en-text" id="ver">V 1.0.0 Beta</span></span>
-      <h1><span data-i18n="h1a">محاضراتك المسجّلة،</span> <span class="gold" data-i18n="h1b">معك بلا إنترنت</span></h1>
-      <p class="lead" data-i18n="lead">نزّل جلسات الجامعة الافتراضية السورية واسمعها بأي وقت مع الفيديو والصوت وتعليقات الصف، وخلّي Gemini يلخّصها ويجاوب أسئلتك.</p>
+      <h1><span data-i18n="h1a">محاضراتك المسجّلة،</span> <span class="gold" data-i18n="h1b">معك دون إنترنت</span></h1>
+      <p class="lead" data-i18n="lead">نزّل جلسات الجامعة الافتراضية السورية المسجّلة وشاهدها في أي وقت مع الفيديو والصوت وتعليقات الطلاب، ودع Gemini يلخّصها ويجيب عن أسئلتك.</p>
       <div class="cta">
-        <a class="btn win" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span><span data-i18n="dl_win">تحميل للويندوز</span><small data-i18n="dl_win_s">ويندوز 10 و 11</small></span></a>
-        <a class="btn and" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span><span data-i18n="dl_and">تحميل للأندرويد</span><small data-i18n="dl_and_s">أندرويد 8 وأحدث</small></span></a>
+        <a class="btn win" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span><span data-i18n="dl_win">تحميل للويندوز</span><small data-i18n="dl_win_s">ويندوز 10 و11</small></span></a>
+        <a class="btn and" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span><span data-i18n="dl_and">تحميل للأندرويد</span><small data-i18n="dl_and_s">أندرويد 8 فما فوق</small></span></a>
       </div>
-      <p class="meta" data-i18n="meta">مجاني · بدون حساب · محاضراتك بتضل على جهازك</p>
+      <p class="meta" data-i18n="meta">مجاني · دون حساب · محاضراتك تبقى على جهازك</p>
     </div>
     <div class="shots" aria-hidden="true">
       <div class="laptop"><img src="assets/win-home.png" alt=""></div>
@@ -223,43 +236,41 @@
 
 <section id="features">
   <div class="wrap">
-    <div class="head"><h2 data-i18n="f_title">كل يلي بتحتاجه لتتابع محاضراتك</h2><p data-i18n="f_sub">مصمّم لطلاب الجامعة الافتراضية، ولنت ضعيف أو مقطوع.</p></div>
+    <div class="head"><h2 data-i18n="f_title">كل ما تحتاجه لمتابعة محاضراتك</h2><p data-i18n="f_sub">مصمَّم لطلاب الجامعة الافتراضية، ويعمل مع الاتصال الضعيف أو المنقطع.</p></div>
     <div class="grid">
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><h3 data-i18n="f1">تنزيل الجلسات</h3><p data-i18n="f1d">اختار الفصل والمقرر والصف ونزّل جلسة وحدة أو كلهن بكبسة، والتنزيل بيكمّل إذا انقطع النت.</p></div>
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M10 8v8l5-4-5-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg></div><h3 data-i18n="f2">الفيديو والصوت والتعليقات</h3><p data-i18n="f2d">كل شي متزامن متل الجلسة الحية، مع ملء الشاشة وسرعات التشغيل.</p></div>
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2c.6 4.8 3.2 7.4 8 8-4.8.6-7.4 3.2-8 8-.6-4.8-3.2-7.4-8-8 4.8-.6 7.4-3.2 8-8z"/></svg></div><h3 data-i18n="f3">Gemini يساعدك تدرس</h3><p data-i18n="f3d">ملخص لكل جلسة مع الأوقات، محادثة عن محتواها، بطاقات مراجعة واختبارات.</p></div>
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div><h3 data-i18n="f4">صوت أوضح</h3><p data-i18n="f4d">تخفيف التشويش وتوضيح صوت المدرّس.</p></div>
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div><h3 data-i18n="f5">بتكمّل من وين وقفت</h3><p data-i18n="f5d">كل محاضرة بتتذكر وين وقفت، ومنظّمة حسب المقرر.</p></div>
-      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5.97 4.06L14.09 6l1.41 1.41L16.91 6l1.06 1.06-1.41 1.41 1.41 1.41-1.06 1.06-1.41-1.4-1.41 1.41-1.06-1.06 1.41-1.41-1.41-1.42zm-6.78.66h5v1.5h-5v-1.5zM11.5 16h-2v2H8v-2H6v-1.5h2v-2h1.5v2h2V16zm6.5 1.25h-5v-1.5h5v1.5zm0-2.5h-5v-1.5h5v1.5z"/></svg></div><h3 data-i18n="f6">حساب المحصلة</h3><p data-i18n="f6d">علامة الوظيفة والامتحان، وشو بتحتاج لتنجح.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><h3 data-i18n="f1">تنزيل الجلسات</h3><p data-i18n="f1d">اختر الفصل والمقرر والصف، ونزّل جلسة واحدة أو جميع الجلسات بنقرة واحدة، ويُستأنف التنزيل إذا انقطع الاتصال.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M10 8v8l5-4-5-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg></div><h3 data-i18n="f2">الفيديو والصوت والتعليقات</h3><p data-i18n="f2d">كل شيء متزامن كما في الجلسة المباشرة، مع وضع ملء الشاشة وسرعات تشغيل متعددة.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2c.6 4.8 3.2 7.4 8 8-4.8.6-7.4 3.2-8 8-.6-4.8-3.2-7.4-8-8 4.8-.6 7.4-3.2 8-8z"/></svg></div><h3 data-i18n="f3">Gemini يساعدك على الدراسة</h3><p data-i18n="f3d">ملخّص لكل جلسة مع التوقيت، ومحادثة حول محتواها، وبطاقات مراجعة واختبارات.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div><h3 data-i18n="f4">صوت أوضح</h3><p data-i18n="f4d">تخفيف الضجيج وتوضيح صوت المدرّس.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div><h3 data-i18n="f5">تابع من حيث توقفت</h3><p data-i18n="f5d">تتذكّر كل محاضرة آخر موضع وصلت إليه، وهي مرتّبة حسب المقرر.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5.97 4.06L14.09 6l1.41 1.41L16.91 6l1.06 1.06-1.41 1.41 1.41 1.41-1.06 1.06-1.41-1.4-1.41 1.41-1.06-1.06 1.41-1.41-1.41-1.42zm-6.78.66h5v1.5h-5v-1.5zM11.5 16h-2v2H8v-2H6v-1.5h2v-2h1.5v2h2V16zm6.5 1.25h-5v-1.5h5v1.5zm0-2.5h-5v-1.5h5v1.5z"/></svg></div><h3 data-i18n="f6">حساب المحصلة</h3><p data-i18n="f6d">أدخل علامة الوظيفة والامتحان، واعرف ما تحتاجه للنجاح.</p></div>
     </div>
   </div>
 </section>
 
 <section id="download" class="alt">
   <div class="wrap">
-    <div class="head"><h2 data-i18n="d_title">نزّل ACADEX</h2><p data-i18n="d_sub">مجاني. التحديثات بتوصلك من جوّا التطبيق.</p></div>
+    <div class="head"><h2 data-i18n="d_title">نزّل ACADEX</h2><p data-i18n="d_sub">مجاني، وتصلك التحديثات من داخل التطبيق.</p></div>
     <div class="downloads">
       <div class="card dl">
         <h3><svg><use href="#i-win"/></svg><span data-i18n="win">ويندوز</span></h3>
-        <p class="req" data-i18n="win_req">ويندوز 10 و 11 · حوالي 2.5 ميغا</p>
+        <p class="req" data-i18n="win_req">ويندوز 10 و11 · نحو 2.5 ميغابايت</p>
         <a class="btn" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span data-i18n="win_btn">تحميل للويندوز</span></a>
         <ol class="steps">
           <li><span data-i18n="w1">نزّل الملف وافتحه.</span></li>
-          <li><span data-i18n="w2">إذا طلع «<bdi>Windows protected your PC</bdi>» اكبس <bdi>More info</bdi> وبعدين <bdi>Run anyway</bdi>.</span></li>
-          <li><span data-i18n="w3">اكبس «تثبيت»، وبتلاقيه بقائمة ابدأ وعلى سطح المكتب.</span></li>
+          <li><span data-i18n="w2">إذا ظهرت رسالة «<bdi>Windows protected your PC</bdi>» فاضغط <bdi>More info</bdi> ثم <bdi>Run anyway</bdi>.</span></li>
+          <li><span data-i18n="w3">اضغط «تثبيت»، وستجد التطبيق في قائمة ابدأ وعلى سطح المكتب.</span></li>
         </ol>
-        <p class="note" data-i18n="w_note">التنبيه بيطلع لأن المثبّت لسا مو موقّع بشهادة مدفوعة، مو لأنو فيه شي.</p>
       </div>
       <div class="card dl">
         <h3><svg><use href="#i-and"/></svg><span data-i18n="and">أندرويد</span></h3>
-        <p class="req" data-i18n="and_req">أندرويد 8 وأحدث · حوالي 4 ميغا</p>
+        <p class="req" data-i18n="and_req">أندرويد 8 فما فوق · نحو 4 ميغابايت</p>
         <a class="btn" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span data-i18n="and_btn">تحميل للأندرويد</span></a>
         <ol class="steps">
-          <li><span data-i18n="a1">نزّل الملف من الموبايل وافتحه.</span></li>
-          <li><span data-i18n="a2">إذا طلب، اسمح للمتصفح بتثبيت التطبيقات (من الإعدادات).</span></li>
-          <li><span data-i18n="a3">اكبس «تثبيت» وافتح ACADEX.</span></li>
+          <li><span data-i18n="a1">نزّل الملف على هاتفك وافتحه.</span></li>
+          <li><span data-i18n="a2">إذا طُلب منك، فاسمح للمتصفح بتثبيت التطبيقات من الإعدادات.</span></li>
+          <li><span data-i18n="a3">اضغط «تثبيت» ثم افتح ACADEX.</span></li>
         </ol>
-        <p class="note" data-i18n="a_note">التطبيق مو من Google Play، فالموبايل ممكن يحذّرك. هاد طبيعي للتطبيقات من برّا المتجر.</p>
       </div>
     </div>
   </div>
@@ -268,11 +279,11 @@
 <section id="gemini">
   <div class="wrap gemini">
     <div>
-      <div class="head"><h2 data-i18n="g_title">مفتاح Gemini مجاني بـ 3 كبسات</h2><p data-i18n="g_sub">مرة وحدة بس، وبعدها بتلخّص محاضراتك وبتسأل عنها.</p></div>
-      <div class="kstep"><b>1</b><div><h4 data-i18n="k1">اكبس «مفتاحي» بالتطبيق</h4><p data-i18n="k1d">من صفحة Gemini Notebook. سجّل دخول بحسابك على Google إذا طلب.</p></div></div>
-      <div class="kstep"><b>2</b><div><h4 data-i18n="k2">اكبس Create API key</h4><p data-i18n="k2d">بالصفحة يلي بتفتح (Google AI Studio).</p></div></div>
-      <div class="kstep"><b>3</b><div><h4 data-i18n="k3">اكبس Copy وارجع الصق</h4><p data-i18n="k3d">بالويندوز بينلصق لحالو أول ما ترجع.</p></div></div>
-      <p class="note" data-i18n="k_note">المفتاح بينحفظ مشفّر على جهازك بس. إذا طلع إنو Gemini مو متاح بمنطقتك، شغّل VPN وجرّب.</p>
+      <div class="head"><h2 data-i18n="g_title">مفتاح Gemini مجاني بثلاث نقرات</h2><p data-i18n="g_sub">مرة واحدة فقط، ثم يمكنك تلخيص محاضراتك وطرح الأسئلة حولها.</p></div>
+      <div class="kstep"><b>1</b><div><h4 data-i18n="k1">اضغط «مفتاحي» في التطبيق</h4><p data-i18n="k1d">من صفحة Gemini Notebook، وسجّل الدخول بحسابك في Google إذا طُلب منك.</p></div></div>
+      <div class="kstep"><b>2</b><div><h4 data-i18n="k2">اضغط Create API key</h4><p data-i18n="k2d">في الصفحة التي تُفتح (Google AI Studio).</p></div></div>
+      <div class="kstep"><b>3</b><div><h4 data-i18n="k3">اضغط Copy ثم عُد والصق المفتاح</h4><p data-i18n="k3d">في ويندوز يُلصق المفتاح تلقائياً عند عودتك.</p></div></div>
+      <p class="note" data-i18n="k_note">يُحفظ المفتاح مشفّراً على جهازك فقط. إذا لم تكن خدمة Gemini متاحة في منطقتك، فشغّل VPN وحاول مجدداً.</p>
     </div>
     <div class="shot"><img src="assets/win-keypage.png" alt="" loading="lazy"></div>
   </div>
@@ -280,21 +291,21 @@
 
 <section id="faq" class="alt">
   <div class="wrap">
-    <div class="head"><h2 data-i18n="q_title">أسئلة شائعة</h2></div>
+    <div class="head"><h2 data-i18n="q_title">الأسئلة الشائعة</h2></div>
     <div class="faq">
-      <details><summary data-i18n="q1">هل التطبيق رسمي من الجامعة؟</summary><p data-i18n="q1a">لا. ACADEX مبادرة شخصية، غير رسمي ولا يتبع للجامعة الافتراضية السورية. بيستعمل صفحة الجلسات المسجّلة العامة متل ما بتفتحها بالمتصفح.</p></details>
-      <details><summary data-i18n="q2">هل هو مجاني؟</summary><p data-i18n="q2a">إي، مجاني بالكامل، وما بيطلب حساب. ميزات Gemini بتشتغل بمفتاحك المجاني من Google.</p></details>
-      <details><summary data-i18n="q3">وين بتنحفظ المحاضرات؟</summary><p data-i18n="q3a">على جهازك بس. التطبيق ما بيبعت محاضراتك ولا معلوماتك لأي مكان، وطلبات Gemini بتروح مباشرة من جهازك لـ Google بمفتاحك.</p></details>
-      <details><summary data-i18n="q4">بدي نت لأسمع المحاضرات؟</summary><p data-i18n="q4a">بس للتنزيل. بعدها بتسمعها بلا نت. Gemini بدّو نت.</p></details>
-      <details><summary data-i18n="q5">ليش ويندوز بيطلّع تنبيه وقت التثبيت؟</summary><p data-i18n="q5a">لأن المثبّت لسا مو موقّع بشهادة مدفوعة. اكبس <bdi>More info</bdi> وبعدين <bdi>Run anyway</bdi>.</p></details>
-      <details><summary data-i18n="q6">في نسخة للآيفون؟</summary><p data-i18n="q6a">لسا لأ. آبل ما بتسمح بتثبيت التطبيقات من برّا المتجر بسهولة، ونعمل عليها حالياً.</p></details>
-      <details><summary data-i18n="q7">كيف بتوصلني التحديثات؟</summary><p data-i18n="q7a">التطبيق بيخبرك لحالو أول ما ينزل إصدار جديد، وبتنزّله.</p></details>
+      <details><summary data-i18n="q1">هل التطبيق رسمي من الجامعة؟</summary><p data-i18n="q1a">لا. ACADEX مبادرة شخصية، وهو تطبيق غير رسمي ولا يتبع للجامعة الافتراضية السورية. يستخدم صفحة الجلسات المسجّلة العامة كما تفتحها في المتصفح.</p></details>
+      <details><summary data-i18n="q2">هل التطبيق مجاني؟</summary><p data-i18n="q2a">نعم، مجاني بالكامل ولا يتطلب إنشاء حساب. تعمل ميزات Gemini بمفتاحك المجاني من Google.</p></details>
+      <details><summary data-i18n="q3">أين تُحفظ المحاضرات؟</summary><p data-i18n="q3a">على جهازك فقط. لا يرسل التطبيق محاضراتك أو بياناتك إلى أي جهة، وتُرسَل طلبات Gemini مباشرة من جهازك إلى Google بمفتاحك.</p></details>
+      <details><summary data-i18n="q4">هل أحتاج إلى الإنترنت لمشاهدة المحاضرات؟</summary><p data-i18n="q4a">فقط عند التنزيل، وبعدها تشاهدها دون إنترنت. أما Gemini فيحتاج إلى اتصال.</p></details>
+      <details><summary data-i18n="q5">لماذا يظهر تنبيه في ويندوز عند التثبيت؟</summary><p data-i18n="q5a">لأن المثبّت غير موقّع بعد بشهادة مدفوعة. اضغط <bdi>More info</bdi> ثم <bdi>Run anyway</bdi>.</p></details>
+      <details><summary data-i18n="q6">هل توجد نسخة للآيفون؟</summary><p data-i18n="q6a">ليس بعد. لا تسمح آبل بسهولة بتثبيت التطبيقات من خارج المتجر، ونعمل على ذلك حالياً.</p></details>
+      <details><summary data-i18n="q7">كيف تصلني التحديثات؟</summary><p data-i18n="q7a">يُعلمك التطبيق تلقائياً فور صدور إصدار جديد، ويمكنك تنزيله.</p></details>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
+<section class="devs">
+  <div class="wrap pair">
     <div class="card dev">
       <div class="banner"></div>
       <img class="photo" src="assets/dev.jpg" alt="Loai Housam Loubani">
@@ -311,6 +322,12 @@
         </div>
       </div>
     </div>
+    <div class="card about" lang="ar" dir="rtl">
+      <h3>بسم الله الرحمن الرحيم</h3>
+      <p>الحمد لله على توفيقه وفضله.</p>
+      <p>ACADEX مبادرة شخصية لمساعدة طلاب الجامعة الافتراضية السورية على متابعة محاضراتهم المسجّلة وحفظها دون إنترنت، بالإضافة إلى الاستفادة من Gemini في تلخيص المحاضرات، والإجابة عن الأسئلة، وإنشاء الاختبارات للمساعدة في المراجعة والاستعداد للامتحانات.</p>
+      <p>أسأل الله أن يبارك بهذا العمل، وأن يجعله علمًا نافعًا وأثرًا طيبًا، وأن يوفقني لما يحب ويرضى.</p>
+    </div>
   </div>
 </section>
 
@@ -318,8 +335,8 @@
   <div class="wrap">
     <span data-i18n="foot">© 2026 لؤي حسام لوباني · التطبيق غير رسمي ولا يتبع للجامعة الافتراضية السورية.</span>
     <nav>
-      <a href="https://t.me/acadexapp" target="_blank" rel="noopener" data-i18n="tg">قناة تلغرام</a>
-      <a href="https://github.com/loailoubani/acadex/releases" data-i18n="all_rel">كل الإصدارات</a>
+      <a href="https://t.me/acadexapp" target="_blank" rel="noopener" data-i18n="tg">قناة التلغرام</a>
+      <a href="https://github.com/loailoubani/acadex/releases" data-i18n="all_rel">جميع الإصدارات</a>
     </nav>
   </div>
 </footer>
@@ -342,10 +359,8 @@
     d_title: "Download ACADEX", d_sub: "Free. Updates reach you inside the app.",
     win: "Windows", win_req: "Windows 10 and 11 · about 2.5 MB", win_btn: "Download for Windows",
     w1: "Download the file and open it.", w2: "If “Windows protected your PC” appears, press More info, then Run anyway.", w3: "Press Install; you'll find it in the Start menu and on the desktop.",
-    w_note: "The warning shows because the installer isn't signed with a paid certificate yet, not because something is wrong with it.",
     and: "Android", and_req: "Android 8 and newer · about 4 MB", and_btn: "Download for Android",
     a1: "Download the file on your phone and open it.", a2: "If asked, allow your browser to install apps (in Settings).", a3: "Press Install and open ACADEX.",
-    a_note: "The app isn't from Google Play, so your phone may warn you. That's normal for apps from outside the store.",
     g_title: "A free Gemini key in 3 taps", g_sub: "Just once; then summarize your lectures and ask about them.",
     k1: "Press “My key” in the app", k1d: "On the Gemini Notebook page. Sign in to Google if asked.",
     k2: "Press Create API key", k2d: "On the page that opens (Google AI Studio).",
