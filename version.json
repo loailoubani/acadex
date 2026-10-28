@@ -1,0 +1,25 @@
+{
+  "versionCode": 1,
+  "versionName": "1.0.0-beta",
+  "url": "https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk",
+  "notes": {
+    "ar": ["النسخة التجريبية الأولى من ACADEX"],
+    "en": ["First beta of ACADEX"]
+  },
+  "minVersionCode": 0,
+  "disabled": false,
+  "message": { "ar": "", "en": "" },
+
+  "windows": {
+    "versionCode": 1,
+    "versionName": "1.0.0 Beta",
+    "url": "https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe",
+    "notes": {
+      "ar": ["النسخة التجريبية الأولى من ACADEX"],
+      "en": ["First beta of ACADEX"]
+    },
+    "minVersionCode": 0,
+    "disabled": false,
+    "message": { "ar": "", "en": "" }
+  }
+}
