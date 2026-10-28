@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/logo.png" width="96" alt="ACADEX"></p>
+<p align="center"><img src="https://loailoubani.github.io/acadex/assets/logo.png" width="96" alt="ACADEX"></p>
 
 <h1 align="center">ACADEX</h1>
 
@@ -11,7 +11,8 @@ The Syrian Virtual University's recorded lectures, with you offline · Android a
 <a href="https://loailoubani.github.io/acadex/"><b>الموقع · Website</b></a> ·
 <a href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe">Windows</a> ·
 <a href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk">Android</a> ·
-<a href="https://github.com/loailoubani/acadex/releases">كل الإصدارات · All releases</a>
+<a href="https://github.com/loailoubani/acadex/releases">كل الإصدارات · All releases</a> ·
+<a href="https://t.me/acadexapp">تلغرام · Telegram</a>
 </p>
 
 ---
