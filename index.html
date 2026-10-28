@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACADEX · محاضراتك المسجّلة بلا إنترنت</title>
+<meta name="description" content="ACADEX: نزّل محاضرات الجامعة الافتراضية السورية المسجّلة واسمعها بلا إنترنت، مع الفيديو والتعليقات وGemini. للأندرويد والويندوز.">
+<meta property="og:title" content="ACADEX · النسخة التجريبية">
+<meta property="og:description" content="محاضرات الجامعة الافتراضية السورية المسجّلة، معك بلا إنترنت. للأندرويد والويندوز.">
+<meta property="og:image" content="https://loailoubani.github.io/acadex/assets/poster.png">
+<meta name="theme-color" content="#0B3A5E">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  // Light unless the visitor picked dark before; set before the page draws, so it never flashes.
+  try { if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark"; } catch (e) {}
+</script>
+<style>
+  :root {
+    --navy: #0B3A5E; --deep: #04192A; --blue: #5AB0E6; --gold: #D9B87A;
+    --primary: #0F5E96; --gold-deep: #7F6126;
+    --bg: #F4F6F9; --surface: #FFFFFF; --surface2: #EEF2F6; --border: #DDE3EA; --text: #0E1A26; --muted: #566676;
+    --gold-soft: #F6EEDD; --primary-soft: #E3EEF7; --shadow: 0 18px 40px rgba(11, 58, 94, .10);
+  }
+  [data-theme="dark"] {
+    --primary: #5AB0E6; --gold-deep: #D9B87A;
+    --bg: #0B1219; --surface: #121C27; --surface2: #0F1821; --border: #243344; --text: #E8EEF4; --muted: #9AABBC;
+    --gold-soft: #2B2416; --primary-soft: #12324A; --shadow: 0 18px 40px rgba(0, 0, 0, .35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Readex Pro", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; transition: background .25s, color .25s; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+  .en-text { direction: ltr; unicode-bidi: isolate; }
+  bdi { white-space: nowrap; }   /* an English phrase inside Arabic stays in one piece */
+  svg.i { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+  /* ---------- header ---------- */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(4, 25, 42, .9); backdrop-filter: blur(10px); color: #fff; }
+  header .wrap { display: flex; align-items: center; gap: 14px; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 2px; font-size: 19px; flex: none; }
+  .logo img { width: 36px; height: 36px; border-radius: 10px; }
+  nav.main { display: flex; gap: 22px; font-size: 15px; color: #C9D6E2; margin-inline-start: 10px; }
+  nav.main a:hover { color: #fff; }
+  .actions { display: flex; align-items: center; gap: 8px; margin-inline-start: auto; }
+  .tg { display: inline-flex; align-items: center; gap: 8px; background: #229ED9; color: #fff; padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: filter .15s; }
+  .tg:hover { filter: brightness(1.1); }
+  .icon-btn { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; cursor: pointer; }
+  .icon-btn:hover { background: rgba(255,255,255,.1); }
+  .lang { border: 1px solid rgba(255,255,255,.25); color: #fff; background: transparent; border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+  .lang:hover { background: rgba(255,255,255,.1); }
+  .sun { display: none; } [data-theme="dark"] .sun { display: block; } [data-theme="dark"] .moon { display: none; }
+
+  /* ---------- hero ---------- */
+  .hero { color: #fff; background:
+      radial-gradient(900px 500px at 85% -10%, rgba(90,176,230,.30), transparent 60%),
+      radial-gradient(700px 500px at 0% 70%, rgba(217,184,122,.16), transparent 60%),
+      linear-gradient(170deg, #0D446D 0%, var(--navy) 40%, var(--deep) 100%);
+    padding: 64px 0 76px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; }
+  .badge { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 600; color: var(--gold);
+    background: rgba(217,184,122,.14); border: 1px solid rgba(217,184,122,.45); padding: 6px 16px; border-radius: 999px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.2; margin: 18px 0 14px; }
+  .hero h1 .gold { color: var(--gold); }
+  .hero p.lead { font-size: clamp(16px, 2vw, 19px); color: #C9D6E2; max-width: 560px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 14px; font-weight: 600; font-size: 17px; transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
+  .btn small { display: block; font-size: 12px; font-weight: 500; opacity: .75; }
+  .btn.win { background: var(--blue); color: #06263D; box-shadow: 0 12px 28px rgba(90,176,230,.35); }
+  .btn.and { background: #fff; color: var(--navy); box-shadow: 0 12px 28px rgba(0,0,0,.25); }
+  .meta { margin-top: 16px; font-size: 14px; color: #A9BBCC; }
+  /* screenshots keep their proportions at any width */
+  .shots { position: relative; width: 100%; aspect-ratio: 1.25; }
+  .shots .laptop { position: absolute; inset-inline-end: 0; top: 6%; width: 90%; border-radius: 12px; background: #0a0f14; padding: 1.4%; box-shadow: 0 30px 60px rgba(0,0,0,.45); }
+  .shots .laptop img { border-radius: 7px; }
+  .shots .phone { position: absolute; width: 30%; border-radius: 9% / 4%; padding: 1.8%; background: #0b1117; box-shadow: 0 26px 50px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.12); }
+  .shots .phone img { border-radius: 7% / 3.2%; aspect-ratio: 9 / 20; object-fit: cover; object-position: top; width: 100%; }
+  .shots .p1 { inset-inline-start: 0; top: 24%; }
+  .shots .p2 { inset-inline-start: 25%; top: 31%; transform: rotate(-4deg); }
+
+  /* ---------- sections ---------- */
+  section { padding: 76px 0; }
+  .alt { background: var(--surface2); }
+  .head { text-align: center; max-width: 720px; margin: 0 auto 40px; }
+  .head h2 { font-size: clamp(26px, 3.5vw, 38px); line-height: 1.3; }
+  .head p { color: var(--muted); font-size: clamp(15px, 1.8vw, 18px); margin-top: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  /* grid children may shrink below their content's natural width (no sideways scrolling on phones) */
+  .hero .wrap > *, .grid > *, .downloads > *, .gemini > * { min-width: 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); }
+  .feat .ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--gold-soft); margin-bottom: 14px; }
+  .feat .ic svg { width: 26px; height: 26px; fill: var(--gold-deep); }
+  .feat h3 { font-size: 19px; margin-bottom: 6px; }
+  .feat p { color: var(--muted); font-size: 15.5px; }
+
+  .downloads { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .dl h3 { display: flex; align-items: center; gap: 12px; font-size: 24px; }
+  .dl h3 svg { width: 30px; height: 30px; fill: var(--primary); }
+  .dl .req { color: var(--muted); margin: 4px 0 18px; }
+  .dl .btn { width: 100%; justify-content: center; background: var(--primary); color: #fff; }
+  [data-theme="dark"] .dl .btn { color: #06263D; }
+  .steps { list-style: none; counter-reset: s; margin-top: 20px; display: grid; gap: 10px; }
+  .steps li { overflow-wrap: anywhere; counter-increment: s; display: flex; gap: 12px; align-items: flex-start; font-size: 15.5px; }
+  .steps li::before { content: counter(s); flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; font-weight: 700; font-size: 14px; margin-top: 1px; }
+  .note { margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: var(--gold-soft); font-size: 14.5px; }
+
+  .gemini { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+  .gemini .head { text-align: start; margin: 0 0 26px; }
+  .gemini .shot { border-radius: 18px; overflow: hidden; border: 8px solid #0b1117; box-shadow: var(--shadow); background: #F4F6F9; }
+  .kstep { display: flex; gap: 14px; margin-bottom: 16px; }
+  .kstep b { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, #F0D7A6, var(--gold)); color: #3A2A0C; font-size: 19px; }
+  .kstep h4 { font-size: 18px; }
+  .kstep p { color: var(--muted); font-size: 15px; }
+
+  .faq { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; }
+  summary { cursor: pointer; font-weight: 600; font-size: 17px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--primary); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { color: var(--muted); margin-top: 10px; font-size: 15.5px; }
+
+  /* ---------- developer ---------- */
+  .dev { max-width: 560px; margin: 0 auto; padding: 0; overflow: hidden; text-align: center; }
+  .dev .banner { height: 110px; background:
+      radial-gradient(300px 120px at 80% 0%, rgba(90,176,230,.45), transparent 70%),
+      radial-gradient(260px 120px at 10% 100%, rgba(217,184,122,.35), transparent 70%),
+      linear-gradient(135deg, #0D446D, var(--navy) 50%, var(--deep)); }
+  .dev .photo { width: 124px; height: 124px; border-radius: 50%; object-fit: cover; margin: -62px auto 0; position: relative;
+    border: 4px solid var(--surface); box-shadow: 0 0 0 3px var(--gold), 0 14px 30px rgba(0,0,0,.25); }
+  .dev .body { padding: 16px 24px 28px; }
+  .dev .label { font-size: 13px; font-weight: 600; letter-spacing: .5px; color: var(--muted); }
+  .dev h3 { font-size: 26px; margin-top: 2px; }
+  .dev .role { display: inline-block; margin-top: 8px; padding: 5px 14px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 14px; direction: ltr; }
+  .social { display: flex; justify-content: center; gap: clamp(6px, 2vw, 10px); margin-top: 22px; }
+  .social a { width: clamp(38px, 11vw, 48px); height: clamp(38px, 11vw, 48px); border-radius: 14px; border: 1px solid var(--border); display: grid; place-items: center; background: var(--surface2); color: var(--text); transition: transform .15s, background .15s, color .15s, border-color .15s; }
+  .social a:hover { transform: translateY(-3px); color: #fff; border-color: transparent; }
+  .social a.li:hover { background: #0A66C2; } .social a.gh:hover { background: #24292F; } .social a.fb:hover { background: #1877F2; }
+  .social a.ig:hover { background: linear-gradient(45deg, #F58529, #DD2A7B 55%, #8134AF); } .social a.tgm:hover { background: #229ED9; }
+  .social svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  footer { background: var(--deep); color: #A9BBCC; padding: 28px 0; font-size: 14.5px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+  footer a:hover { color: #fff; }
+
+  /* ---------- smaller screens ---------- */
+  @media (max-width: 960px) {
+    nav.main { display: none; }
+    .hero .wrap, .gemini, .downloads { grid-template-columns: minmax(0, 1fr); }
+    .hero .shots { max-width: 620px; margin: 0 auto; }
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 56px 0; }
+    .hero { padding: 40px 0 52px; }
+    .tg .label { display: none; }
+    .tg { padding: 0; width: 38px; height: 38px; justify-content: center; }
+    .grid { grid-template-columns: minmax(0, 1fr); }
+    .cta .btn { flex: 1 1 100%; justify-content: center; }
+    .card { padding: 20px; }
+    footer .wrap { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 380px) {
+    .wrap { padding: 0 14px; }
+    .logo span { display: none; }
+    .lang { padding: 7px 10px; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-win" viewBox="0 0 24 24"><path d="M3 5.5l7.5-1v7H3v-6zm0 13l7.5 1v-7H3v6zm8.5 1.1L21 21v-8.5h-9.5v7.1zm0-15.2v7.1H21V3l-9.5 1.4z"/></symbol>
+  <symbol id="i-and" viewBox="0 0 24 24"><path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 00-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67a.643.643 0 00-.87-.2c-.28.18-.37.54-.22.83L6.4 9.48A10.78 10.78 0 001 18h22a10.78 10.78 0 00-5.4-8.52zM7 15.25a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zm10 0a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5z"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.9 4.3L18.7 19.4c-.2 1-.9 1.3-1.8.8l-4.8-3.6-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.4 13 1.6 11.5c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><img src="assets/logo.png" alt="ACADEX"><span class="en-text">ACADEX</span></a>
+    <nav class="main">
+      <a href="#features" data-i18n="nav_features">المميزات</a>
+      <a href="#download" data-i18n="nav_download">التحميل</a>
+      <a href="#gemini">Gemini</a>
+      <a href="#faq" data-i18n="nav_faq">أسئلة</a>
+    </nav>
+    <div class="actions">
+      <a class="tg" href="https://t.me/acadexapp" target="_blank" rel="noopener" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg><span class="label" data-i18n="tg">قناة تلغرام</span></a>
+      <button class="icon-btn" id="theme" type="button" aria-label="Dark / light">
+        <svg class="i moon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 01-4.4 2.26 5.4 5.4 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+        <svg class="i sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 000-2H2a1 1 0 000 2zm18 0h2a1 1 0 000-2h-2a1 1 0 000 2zM11 2v2a1 1 0 002 0V2a1 1 0 00-2 0zm0 18v2a1 1 0 002 0v-2a1 1 0 00-2 0zM5.99 4.58a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 00-1.41 1.41l1.06 1.06a1 1 0 001.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 00-1.41-1.41l-1.06 1.06a1 1 0 001.41 1.41l1.06-1.06z"/></svg>
+      </button>
+      <button class="lang" id="lang" type="button">English</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <span class="badge"><span data-i18n="badge">النسخة التجريبية</span> · <span class="en-text" id="ver">V 1.0.0 Beta</span></span>
+      <h1><span data-i18n="h1a">محاضراتك المسجّلة،</span> <span class="gold" data-i18n="h1b">معك بلا إنترنت</span></h1>
+      <p class="lead" data-i18n="lead">نزّل جلسات الجامعة الافتراضية السورية واسمعها بأي وقت مع الفيديو والصوت وتعليقات الصف، وخلّي Gemini يلخّصها ويجاوب أسئلتك.</p>
+      <div class="cta">
+        <a class="btn win" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span><span data-i18n="dl_win">تحميل للويندوز</span><small data-i18n="dl_win_s">ويندوز 10 و 11</small></span></a>
+        <a class="btn and" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span><span data-i18n="dl_and">تحميل للأندرويد</span><small data-i18n="dl_and_s">أندرويد 8 وأحدث</small></span></a>
+      </div>
+      <p class="meta" data-i18n="meta">مجاني · بدون حساب · محاضراتك بتضل على جهازك</p>
+    </div>
+    <div class="shots" aria-hidden="true">
+      <div class="laptop"><img src="assets/win-home.png" alt=""></div>
+      <div class="phone p1"><img src="assets/phone-home.jpg" alt=""></div>
+      <div class="phone p2"><img src="assets/phone-summary.jpg" alt=""></div>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="head"><h2 data-i18n="f_title">كل يلي بتحتاجه لتتابع محاضراتك</h2><p data-i18n="f_sub">مصمّم لطلاب الجامعة الافتراضية، ولنت ضعيف أو مقطوع.</p></div>
+    <div class="grid">
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div><h3 data-i18n="f1">تنزيل الجلسات</h3><p data-i18n="f1d">اختار الفصل والمقرر والصف ونزّل جلسة وحدة أو كلهن بكبسة، والتنزيل بيكمّل إذا انقطع النت.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M10 8v8l5-4-5-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg></div><h3 data-i18n="f2">الفيديو والصوت والتعليقات</h3><p data-i18n="f2d">كل شي متزامن متل الجلسة الحية، مع ملء الشاشة وسرعات التشغيل.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2c.6 4.8 3.2 7.4 8 8-4.8.6-7.4 3.2-8 8-.6-4.8-3.2-7.4-8-8 4.8-.6 7.4-3.2 8-8z"/></svg></div><h3 data-i18n="f3">Gemini يساعدك تدرس</h3><p data-i18n="f3d">ملخص لكل جلسة مع الأوقات، محادثة عن محتواها، بطاقات مراجعة واختبارات.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div><h3 data-i18n="f4">صوت أوضح</h3><p data-i18n="f4d">تخفيف التشويش وتوضيح صوت المدرّس.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg></div><h3 data-i18n="f5">بتكمّل من وين وقفت</h3><p data-i18n="f5d">كل محاضرة بتتذكر وين وقفت، ومنظّمة حسب المقرر.</p></div>
+      <div class="card feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5.97 4.06L14.09 6l1.41 1.41L16.91 6l1.06 1.06-1.41 1.41 1.41 1.41-1.06 1.06-1.41-1.4-1.41 1.41-1.06-1.06 1.41-1.41-1.41-1.42zm-6.78.66h5v1.5h-5v-1.5zM11.5 16h-2v2H8v-2H6v-1.5h2v-2h1.5v2h2V16zm6.5 1.25h-5v-1.5h5v1.5zm0-2.5h-5v-1.5h5v1.5z"/></svg></div><h3 data-i18n="f6">حساب المحصلة</h3><p data-i18n="f6d">علامة الوظيفة والامتحان، وشو بتحتاج لتنجح.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="download" class="alt">
+  <div class="wrap">
+    <div class="head"><h2 data-i18n="d_title">نزّل ACADEX</h2><p data-i18n="d_sub">مجاني. التحديثات بتوصلك من جوّا التطبيق.</p></div>
+    <div class="downloads">
+      <div class="card dl">
+        <h3><svg><use href="#i-win"/></svg><span data-i18n="win">ويندوز</span></h3>
+        <p class="req" data-i18n="win_req">ويندوز 10 و 11 · حوالي 2.5 ميغا</p>
+        <a class="btn" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe"><svg><use href="#i-win"/></svg><span data-i18n="win_btn">تحميل للويندوز</span></a>
+        <ol class="steps">
+          <li><span data-i18n="w1">نزّل الملف وافتحه.</span></li>
+          <li><span data-i18n="w2">إذا طلع «<bdi>Windows protected your PC</bdi>» اكبس <bdi>More info</bdi> وبعدين <bdi>Run anyway</bdi>.</span></li>
+          <li><span data-i18n="w3">اكبس «تثبيت»، وبتلاقيه بقائمة ابدأ وعلى سطح المكتب.</span></li>
+        </ol>
+        <p class="note" data-i18n="w_note">التنبيه بيطلع لأن المثبّت لسا مو موقّع بشهادة مدفوعة، مو لأنو فيه شي.</p>
+      </div>
+      <div class="card dl">
+        <h3><svg><use href="#i-and"/></svg><span data-i18n="and">أندرويد</span></h3>
+        <p class="req" data-i18n="and_req">أندرويد 8 وأحدث · حوالي 4 ميغا</p>
+        <a class="btn" href="https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk"><svg><use href="#i-and"/></svg><span data-i18n="and_btn">تحميل للأندرويد</span></a>
+        <ol class="steps">
+          <li><span data-i18n="a1">نزّل الملف من الموبايل وافتحه.</span></li>
+          <li><span data-i18n="a2">إذا طلب، اسمح للمتصفح بتثبيت التطبيقات (من الإعدادات).</span></li>
+          <li><span data-i18n="a3">اكبس «تثبيت» وافتح ACADEX.</span></li>
+        </ol>
+        <p class="note" data-i18n="a_note">التطبيق مو من Google Play، فالموبايل ممكن يحذّرك. هاد طبيعي للتطبيقات من برّا المتجر.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gemini">
+  <div class="wrap gemini">
+    <div>
+      <div class="head"><h2 data-i18n="g_title">مفتاح Gemini مجاني بـ 3 كبسات</h2><p data-i18n="g_sub">مرة وحدة بس، وبعدها بتلخّص محاضراتك وبتسأل عنها.</p></div>
+      <div class="kstep"><b>1</b><div><h4 data-i18n="k1">اكبس «مفتاحي» بالتطبيق</h4><p data-i18n="k1d">من صفحة Gemini Notebook. سجّل دخول بحسابك على Google إذا طلب.</p></div></div>
+      <div class="kstep"><b>2</b><div><h4 data-i18n="k2">اكبس Create API key</h4><p data-i18n="k2d">بالصفحة يلي بتفتح (Google AI Studio).</p></div></div>
+      <div class="kstep"><b>3</b><div><h4 data-i18n="k3">اكبس Copy وارجع الصق</h4><p data-i18n="k3d">بالويندوز بينلصق لحالو أول ما ترجع.</p></div></div>
+      <p class="note" data-i18n="k_note">المفتاح بينحفظ مشفّر على جهازك بس. إذا طلع إنو Gemini مو متاح بمنطقتك، شغّل VPN وجرّب.</p>
+    </div>
+    <div class="shot"><img src="assets/win-keypage.png" alt="" loading="lazy"></div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="head"><h2 data-i18n="q_title">أسئلة شائعة</h2></div>
+    <div class="faq">
+      <details><summary data-i18n="q1">هل التطبيق رسمي من الجامعة؟</summary><p data-i18n="q1a">لا. ACADEX مبادرة شخصية، غير رسمي ولا يتبع للجامعة الافتراضية السورية. بيستعمل صفحة الجلسات المسجّلة العامة متل ما بتفتحها بالمتصفح.</p></details>
+      <details><summary data-i18n="q2">هل هو مجاني؟</summary><p data-i18n="q2a">إي، مجاني بالكامل، وما بيطلب حساب. ميزات Gemini بتشتغل بمفتاحك المجاني من Google.</p></details>
+      <details><summary data-i18n="q3">وين بتنحفظ المحاضرات؟</summary><p data-i18n="q3a">على جهازك بس. التطبيق ما بيبعت محاضراتك ولا معلوماتك لأي مكان، وطلبات Gemini بتروح مباشرة من جهازك لـ Google بمفتاحك.</p></details>
+      <details><summary data-i18n="q4">بدي نت لأسمع المحاضرات؟</summary><p data-i18n="q4a">بس للتنزيل. بعدها بتسمعها بلا نت. Gemini بدّو نت.</p></details>
+      <details><summary data-i18n="q5">ليش ويندوز بيطلّع تنبيه وقت التثبيت؟</summary><p data-i18n="q5a">لأن المثبّت لسا مو موقّع بشهادة مدفوعة. اكبس <bdi>More info</bdi> وبعدين <bdi>Run anyway</bdi>.</p></details>
+      <details><summary data-i18n="q6">في نسخة للآيفون؟</summary><p data-i18n="q6a">لسا لأ. آبل ما بتسمح بتثبيت التطبيقات من برّا المتجر بسهولة، ونعمل عليها حالياً.</p></details>
+      <details><summary data-i18n="q7">كيف بتوصلني التحديثات؟</summary><p data-i18n="q7a">التطبيق بيخبرك لحالو أول ما ينزل إصدار جديد، وبتنزّله.</p></details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="card dev">
+      <div class="banner"></div>
+      <img class="photo" src="assets/dev.jpg" alt="Loai Housam Loubani">
+      <div class="body">
+        <div class="label" data-i18n="dev_label">المطوّر</div>
+        <h3 data-i18n="dev_name">لؤي حسام لوباني</h3>
+        <div class="role">Software QA Specialist</div>
+        <div class="social">
+          <a class="li" href="https://www.linkedin.com/in/loai-loubani-925aba2ba" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M6.5,3h11a3.5,3.5 0,0 1,3.5 3.5v11a3.5,3.5 0,0 1,-3.5 3.5h-11a3.5,3.5 0,0 1,-3.5 -3.5v-11a3.5,3.5 0,0 1,3.5 -3.5z"/><path d="M8,10.5V17M8,7.2v0.3M12,17v-6.5M12,13.5a2.5,2.5 0,0 1,5 0V17"/></svg></a>
+          <a class="gh" href="https://github.com/loailoubani" aria-label="GitHub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9,19c-5,1.5 -5,-2.5 -7,-3m14,6v-3.9a3.4,3.4 0,0 0,-0.9 -2.6c3.1,-0.3 6.4,-1.5 6.4,-7a5.4,5.4 0,0 0,-1.5 -3.8A5.1,5.1 0,0 0,19.9 1S18.7,0.6 16,2.5a13.4,13.4 0,0 0,-7 0C6.3,0.6 5.1,1 5.1,1A5.1,5.1 0,0 0,5 4.8a5.4,5.4 0,0 0,-1.5 3.8c0,5.4 3.3,6.6 6.4,7A3.4,3.4 0,0 0,9 18.1V22"/></svg></a>
+          <a class="tgm" href="https://t.me/loailoubani" aria-label="Telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21.2 4.6L2.9 11.7c-.8.3-.8 1.4 0 1.7l4.4 1.6 1.7 5.4c.2.6 1 .8 1.4.3l2.5-2.4 4.6 3.4c.6.4 1.4.1 1.6-.6l3-14.6c.2-.9-.6-1.6-1.5-1.3z"/><path d="M7.3 15l10.4-7.6-8.4 8.8"/></svg></a>
+          <a class="fb" href="https://www.facebook.com/loai.loubani" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M15,3.5h-2.2A3.8,3.8 0,0 0,9 7.3V10H6.8v3.6H9v7h3.6v-7h2.6l0.5,-3.6h-3.1V7.6c0,-0.5 0.4,-0.8 0.8,-0.8H15z"/></svg></a>
+          <a class="ig" href="https://www.instagram.com/loailoubani" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M8,3h8a5,5 0,0 1,5 5v8a5,5 0,0 1,-5 5h-8a5,5 0,0 1,-5 -5v-8a5,5 0,0 1,5 -5z"/><path d="M12,8a4,4 0,1 1,0 8a4,4 0,1 1,0 -8zM17.3,6.7v0.1"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="foot">© 2026 لؤي حسام لوباني · التطبيق غير رسمي ولا يتبع للجامعة الافتراضية السورية.</span>
+    <nav>
+      <a href="https://t.me/acadexapp" target="_blank" rel="noopener" data-i18n="tg">قناة تلغرام</a>
+      <a href="https://github.com/loailoubani/acadex/releases" data-i18n="all_rel">كل الإصدارات</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // English texts; Arabic is what the page is written in.
+  const EN = {
+    nav_features: "Features", nav_download: "Download", nav_faq: "FAQ", tg: "Telegram channel",
+    badge: "Beta", h1a: "Your recorded lectures,", h1b: "with you offline",
+    lead: "Download the Syrian Virtual University's recorded sessions and watch them any time with video, voice and class comments, and let Gemini summarize them and answer your questions.",
+    dl_win: "Download for Windows", dl_win_s: "Windows 10 and 11", dl_and: "Download for Android", dl_and_s: "Android 8 and newer",
+    meta: "Free · No account · Your lectures stay on your device",
+    f_title: "Everything you need to follow your lectures", f_sub: "Made for SVU students, and for weak or missing internet.",
+    f1: "Download sessions", f1d: "Pick the term, course and class, and download one session or all of them; downloads resume if the connection drops.",
+    f2: "Video, voice and comments", f2d: "All in sync like the live session, with full screen and playback speeds.",
+    f3: "Study with Gemini", f3d: "A summary of each session with times, chat about it, review cards and quizzes.",
+    f4: "Clearer voice", f4d: "Less noise and a clearer tutor voice.",
+    f5: "Pick up where you left off", f5d: "Every lecture remembers your place, organized by course.",
+    f6: "Final grade", f6d: "Assignment and exam marks, and what you need to pass.",
+    d_title: "Download ACADEX", d_sub: "Free. Updates reach you inside the app.",
+    win: "Windows", win_req: "Windows 10 and 11 · about 2.5 MB", win_btn: "Download for Windows",
+    w1: "Download the file and open it.", w2: "If “Windows protected your PC” appears, press More info, then Run anyway.", w3: "Press Install; you'll find it in the Start menu and on the desktop.",
+    w_note: "The warning shows because the installer isn't signed with a paid certificate yet, not because something is wrong with it.",
+    and: "Android", and_req: "Android 8 and newer · about 4 MB", and_btn: "Download for Android",
+    a1: "Download the file on your phone and open it.", a2: "If asked, allow your browser to install apps (in Settings).", a3: "Press Install and open ACADEX.",
+    a_note: "The app isn't from Google Play, so your phone may warn you. That's normal for apps from outside the store.",
+    g_title: "A free Gemini key in 3 taps", g_sub: "Just once; then summarize your lectures and ask about them.",
+    k1: "Press “My key” in the app", k1d: "On the Gemini Notebook page. Sign in to Google if asked.",
+    k2: "Press Create API key", k2d: "On the page that opens (Google AI Studio).",
+    k3: "Press Copy and come back to paste", k3d: "On Windows it pastes itself when you come back.",
+    k_note: "The key is stored encrypted on your device only. If Gemini isn't available in your region, turn on a VPN and try again.",
+    q_title: "Frequently asked questions",
+    q1: "Is this an official university app?", q1a: "No. ACADEX is a personal initiative, unofficial and not affiliated with the Syrian Virtual University. It uses the public recorded-sessions page, just as you'd open it in a browser.",
+    q2: "Is it free?", q2a: "Yes, completely free, with no account. Gemini features use your own free key from Google.",
+    q3: "Where are lectures stored?", q3a: "On your device only. The app doesn't send your lectures or data anywhere, and Gemini requests go straight from your device to Google with your key.",
+    q4: "Do I need internet to listen?", q4a: "Only to download. After that you listen offline. Gemini needs internet.",
+    q5: "Why does Windows show a warning when installing?", q5a: "Because the installer isn't signed with a paid certificate yet. Press More info, then Run anyway.",
+    q6: "Is there an iPhone version?", q6a: "Not yet. Apple doesn't make it easy to install apps from outside the App Store, and we're working on it.",
+    q7: "How do updates reach me?", q7a: "The app tells you as soon as a new version is out, and you download it.",
+    dev_label: "DEVELOPER", dev_name: "Loai Housam Loubani",
+    foot: "© 2026 Loai Housam Loubani · Unofficial; not affiliated with the Syrian Virtual University.", all_rel: "All releases",
+  };
+  const AR = {};
+  document.querySelectorAll("[data-i18n]").forEach(e => AR[e.dataset.i18n] = e.innerHTML);
+  const pageTitle = { ar: document.title, en: "ACADEX · Your recorded lectures, offline" };
+
+  function applyLang(lang) {
+    const t = lang === "en" ? EN : AR;
+    document.querySelectorAll("[data-i18n]").forEach(e => { const v = t[e.dataset.i18n]; if (v) e.innerHTML = v; });   // fixed texts from this page only
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+    document.title = pageTitle[lang];
+    document.getElementById("lang").textContent = lang === "en" ? "العربية" : "English";
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  let lang = "ar";
+  try { lang = localStorage.getItem("lang") || "ar"; } catch (e) {}
+  if (lang === "en") applyLang("en");
+  document.getElementById("lang").addEventListener("click", () => { lang = lang === "en" ? "ar" : "en"; applyLang(lang); });
+
+  document.getElementById("theme").addEventListener("click", () => {
+    const dark = document.documentElement.dataset.theme !== "dark";
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+  });
+
+  // The version shown comes from version.json, the same file the apps read.
+  fetch("https://raw.githubusercontent.com/loailoubani/acadex/main/version.json", { cache: "no-store" }).then(r => r.json()).then(v => {
+    const w = v.windows && v.windows.versionName;
+    if (w) document.getElementById("ver").textContent = "V " + w;
+  }).catch(() => {});
+</script>
+</body>
+</html>
