@@ -1,22 +1,22 @@
 {
-  "versionCode": 1,
-  "versionName": "1.0.0-beta",
+  "versionCode": 2,
+  "versionName": "1.0.0",
   "url": "https://github.com/loailoubani/acadex/releases/latest/download/ACADEX.apk",
   "notes": {
-    "ar": ["النسخة التجريبية الأولى من ACADEX"],
-    "en": ["First beta of ACADEX"]
+    "ar": ["النسخة النهائية من ACADEX", "الإشعارات، وتنبيه بالمحاضرات الجديدة للمواد التي تتابعها", "صفحة الفرص: تدريب ودورات تعليمية", "فتح ملف محاضرة من جهازك، وتحويل المحاضرة إلى MP4"],
+    "en": ["The final version of ACADEX", "Notifications, and alerts for new lectures of courses you follow", "Opportunities: training and courses", "Open a lecture file from your device, and convert a lecture to MP4"]
   },
   "minVersionCode": 0,
   "disabled": false,
   "message": { "ar": "", "en": "" },
 
   "windows": {
-    "versionCode": 1,
-    "versionName": "1.0.0 Beta",
+    "versionCode": 2,
+    "versionName": "1.0.0",
     "url": "https://github.com/loailoubani/acadex/releases/latest/download/ACADEX-Setup.exe",
     "notes": {
-      "ar": ["النسخة التجريبية الأولى من ACADEX"],
-      "en": ["First beta of ACADEX"]
+      "ar": ["النسخة النهائية من ACADEX", "الإشعارات، وتنبيه بالمحاضرات الجديدة للمواد التي تتابعها", "صفحة الفرص: تدريب ودورات تعليمية", "فتح ملف محاضرة من جهازك، وتحويل المحاضرة إلى MP4"],
+      "en": ["The final version of ACADEX", "Notifications, and alerts for new lectures of courses you follow", "Opportunities: training and courses", "Open a lecture file from your device, and convert a lecture to MP4"]
     },
     "minVersionCode": 0,
     "disabled": false,
