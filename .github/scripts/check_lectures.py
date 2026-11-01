@@ -5,10 +5,16 @@ read from GitHub, so the university site only ever sees this one slow visitor.
 
 One request at a time, two seconds apart. If the site struggles the checker waits longer, and it
 stops for this round after repeated failures; the courses it did not reach keep their last result.
+
+A session is listed on the site before its recording exists, sometimes days before it takes place,
+so a session is published only once its .lrec file is there. Each look at a session's files is one
+more request, so a confirmed session is never looked at again.
 """
+import datetime
 import http.cookiejar
 import json
 import os
+import re
 import sys
 import time
 import urllib.parse
@@ -27,8 +33,12 @@ RETRY_WAITS = [10, 30, 90]
 STOP_AFTER_FAILURES = 3
 TIME_BUDGET = 40 * 60
 SESSIONS_PER_CLASS = 10
+UPLOAD_WINDOW_DAYS = 21  # a recording that has not appeared by then is no longer looked for
+LATE = '|f'              # marks a session whose id devices already saw without a file, so they alert once it arrives
 TOUCH_AFTER_DAYS = 25    # GitHub pauses scheduled jobs in a repository that stays quiet for 60 days
 MAX_COURSES = 2000
+FILES_TABLE = re.compile(r'<table[^>]*id="GridView1".*?</table>', re.S | re.I)
+LECTURE_FILE = re.compile(r'\.lrec\b', re.I)
 
 
 class Page(HTMLParser):
@@ -36,6 +46,7 @@ class Page(HTMLParser):
 
     def __init__(self, html):
         super().__init__(convert_charrefs=True)
+        self.html = html
         self.hidden, self.selects, self.rows = {}, {}, []
         self._select = self._option = self._text = self._row = self._cell = None
         self._in_grid = False
@@ -124,20 +135,44 @@ class Site:
         self.page = self._fetch()
         return self.page.selects.get(TERM, [])
 
+    def _post(self, target, argument=''):
+        form = {k: v for k, v in self.page.hidden.items() if k not in ('__EVENTTARGET', '__EVENTARGUMENT')}
+        form.update({'__EVENTTARGET': target, '__EVENTARGUMENT': argument})
+        form.update(self.chosen)
+        self.page = self._fetch(urllib.parse.urlencode(form).encode())
+
     def choose(self, field, value):
         keep = FIELDS[:FIELDS.index(field)]
         self.chosen = {k: v for k, v in self.chosen.items() if k in keep}
         self.chosen[field] = value
-        form = {k: v for k, v in self.page.hidden.items() if k not in ('__EVENTTARGET', '__EVENTARGUMENT')}
-        form.update({'__EVENTTARGET': field, '__EVENTARGUMENT': ''})
-        form.update(self.chosen)
-        self.page = self._fetch(urllib.parse.urlencode(form).encode())
+        self._post(field)
         at = FIELDS.index(field) + 1
         return self.page.selects.get(FIELDS[at], []) if at < len(FIELDS) else []
 
+    def has_lecture(self, row):
+        """Whether row number [row] of the sessions grid has its recording on the site."""
+        self._post('GridView_results', 'Select$%d' % row)
+        files = FILES_TABLE.search(self.page.html)
+        return bool(files and LECTURE_FILE.search(files.group(0)))
 
-def read_course(site, term, program, course):
-    """Every class of the course, newest sessions first; None if the site no longer offers the course."""
+
+def session_day(date):
+    try:
+        return datetime.datetime.strptime(date.split()[0], '%d-%m-%Y').date()
+    except (ValueError, IndexError):
+        return None
+
+
+def read_course(site, term, program, course, previous=None):
+    """
+    Every class of the course, newest sessions first, keeping only sessions whose recording exists.
+    The others wait in 'pending' while they are recent. None if the site no longer offers the course.
+    """
+    before = previous or {}
+    confirmed = {s['id'].removesuffix(LATE): s for s in before.get('sessions', []) if s.get('file')}
+    waiting = set(before.get('pending', []))
+    today = datetime.datetime.now(datetime.timezone.utc).date()
+    oldest = today - datetime.timedelta(days=UPLOAD_WINDOW_DAYS)
     site.start()
     if not any(v == term for v, _ in site.page.selects.get(TERM, [])):
         return None
@@ -148,15 +183,26 @@ def read_course(site, term, program, course):
     label = next((name for v, name in courses if v == course), None)
     if label is None:
         return None
-    sessions = []
+    sessions, pending = [], []
     for tutor, _ in site.choose(COURSE, course):
         for klass, _ in site.choose(TUTOR, tutor):
             site.choose(CLASS, klass)
-            for row in site.page.rows[:SESSIONS_PER_CLASS]:
+            for index, row in enumerate(site.page.rows[:SESSIONS_PER_CLASS]):
                 # Columns: select, program, course, class, term, order, tutor, date. Nobody's name is kept.
                 _, _, _, class_code, _, order, _, date = row[:8]
-                sessions.append({'id': '|'.join((class_code, order, date)), 'class': class_code, 'order': order, 'date': date})
-    return {'name': label, 'sessions': sessions}
+                session = '|'.join((class_code, order, date))
+                if session in confirmed:
+                    sessions.append(confirmed[session])
+                    continue
+                day = session_day(date)
+                if day and not oldest <= day <= today:
+                    continue
+                if site.has_lecture(index):
+                    sessions.append({'id': session + LATE if session in waiting else session,
+                                     'class': class_code, 'order': order, 'date': date, 'file': 1})
+                else:
+                    pending.append(session)
+    return {'name': label, 'sessions': sessions, 'pending': pending}
 
 
 def followed():
@@ -198,7 +244,7 @@ def main():
             c = wanted[(cursor + i) % len(wanted)]
             key = '|'.join((c['term'], c['program'], c['course']))
             try:
-                result = read_course(site, c['term'], c['program'], c['course'])
+                result = read_course(site, c['term'], c['program'], c['course'], courses.get(key))
             except OSError:
                 done += 1
                 continue
